@@ -1,11 +1,13 @@
 # api documentation for  [gulp-compass (v2.1.0)](https://github.com/appleboy/gulp-compass)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-compass.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-compass) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-compass.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-compass)
 #### Compile Compass files
 
-[![NPM](https://nodei.co/npm/gulp-compass.png?downloads=true)](https://www.npmjs.com/package/gulp-compass)
+[![NPM](https://nodei.co/npm/gulp-compass.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/gulp-compass)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-gulp-compass/build/screen-capture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-gulp-compass_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-gulp-compass/build..beta..travis-ci.org/apidoc.html)
+[![apidoc](https://npmdoc.github.io/node-npmdoc-gulp-compass/build/screenCapture.buildCi.browser.apidoc.html.png)](https://npmdoc.github.io/node-npmdoc-gulp-compass/build/apidoc.html)
 
-![package-listing](https://npmdoc.github.io/node-npmdoc-gulp-compass/build/screen-capture.npmPackageListing.svg)
+![npmPackageListing](https://npmdoc.github.io/node-npmdoc-gulp-compass/build/screenCapture.npmPackageListing.svg)
+
+![npmPackageDependencyTree](https://npmdoc.github.io/node-npmdoc-gulp-compass/build/screenCapture.npmPackageDependencyTree.svg)
 
 
 
@@ -66,13 +68,11 @@
     "main": "lib",
     "maintainers": [
         {
-            "name": "appleboy",
-            "email": "appleboy.tw@gmail.com"
+            "name": "appleboy"
         }
     ],
     "name": "gulp-compass",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git://github.com/appleboy/gulp-compass.git"
@@ -89,10 +89,100 @@
 # <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
 
 #### [module gulp-compass](#apidoc.module.gulp-compass)
+1.  [function <span class="apidocSignatureSpan"></span>gulp-compass (opt)](#apidoc.element.gulp-compass.gulp-compass)
+1.  [function <span class="apidocSignatureSpan">gulp-compass.</span>toString ()](#apidoc.element.gulp-compass.toString)
 
 
 
 # <a name="apidoc.module.gulp-compass"></a>[module gulp-compass](#apidoc.module.gulp-compass)
+
+#### <a name="apidoc.element.gulp-compass.gulp-compass"></a>[function <span class="apidocSignatureSpan"></span>gulp-compass (opt)](#apidoc.element.gulp-compass.gulp-compass)
+- description and source-code
+```javascript
+gulp-compass = function (opt) {
+  var files = [];
+
+  var collectNames = function(file, enc, cb) {
+    if (file.isNull()) {
+      return cb(null, file);
+    }
+
+    if (file.isStream()) {
+      return cb(new gutil.PluginError(PLUGIN_NAME, 'Streaming not supported'));
+    }
+
+    if (path.basename(file.path)[0] !== '_') {
+      files.push(file);
+    }
+
+    return cb();
+  };
+
+  var readFileAndPush = function(pathToCss, outputStream, cb) {
+    // Read each generated file so it can continue being streamed.
+    fs.readFile(pathToCss, function(err, contents) {
+      if (err) {
+        return cb(new gutil.PluginError(PLUGIN_NAME, 'Failure reading in the CSS output file'));
+      }
+
+      // Fix garbled output.
+      if (!(contents instanceof Buffer)) {
+        contents = new Buffer(contents);
+      }
+
+      outputStream.push(new gutil.File({
+        base: opt.css,
+        path: pathToCss,
+        contents: contents
+      }));
+
+      cb();
+    });
+  };
+
+  var compile = function(cb) {
+    var _this = this;
+    var fileNames = files.map(function(f) {
+      return f.path;
+    });
+
+    compass(fileNames, opt, function(code, stdout, stderr, pathsToCss, options) {
+      if (code === 127) {
+        return cb(new gutil.PluginError(PLUGIN_NAME, 'You need to have Ruby and Compass installed ' +
+          'and in your system PATH for this task to work.'));
+      }
+
+      // support error callback
+      if (code !== 0) {
+        return cb(new gutil.PluginError(PLUGIN_NAME, stdout || 'Compass failed'));
+      }
+
+      cb = callCounter(files.length, cb);
+      pathsToCss.forEach(function(f) {
+        readFileAndPush(f, _this, cb);
+      });
+    });
+  };
+
+  return through.obj(collectNames, compile);
+}
+```
+- example usage
+```shell
+n/a
+```
+
+#### <a name="apidoc.element.gulp-compass.toString"></a>[function <span class="apidocSignatureSpan">gulp-compass.</span>toString ()](#apidoc.element.gulp-compass.toString)
+- description and source-code
+```javascript
+toString = function () {
+    return toString;
+}
+```
+- example usage
+```shell
+n/a
+```
 
 
 
