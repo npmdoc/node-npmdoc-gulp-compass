@@ -61,12 +61,124 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-compass">module gulp-compass</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-compass.gulp-compass">
+            function <span class="apidocSignatureSpan"></span>gulp-compass
+            <span class="apidocSignatureSpan">(opt)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-compass.toString">
+            function <span class="apidocSignatureSpan">gulp-compass.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.gulp-compass" id="apidoc.module.gulp-compass">module gulp-compass</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-compass.gulp-compass" id="apidoc.element.gulp-compass.gulp-compass">
+        function <span class="apidocSignatureSpan"></span>gulp-compass
+        <span class="apidocSignatureSpan">(opt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">gulp-compass = function (opt) {
+  var files = [];
+
+  var collectNames = function(file, enc, cb) {
+    if (file.isNull()) {
+      return cb(null, file);
+    }
+
+    if (file.isStream()) {
+      return cb(new gutil.PluginError(PLUGIN_NAME, &#x27;Streaming not supported&#x27;));
+    }
+
+    if (path.basename(file.path)[0] !== &#x27;_&#x27;) {
+      files.push(file);
+    }
+
+    return cb();
+  };
+
+  var readFileAndPush = function(pathToCss, outputStream, cb) {
+    // Read each generated file so it can continue being streamed.
+    fs.readFile(pathToCss, function(err, contents) {
+      if (err) {
+        return cb(new gutil.PluginError(PLUGIN_NAME, &#x27;Failure reading in the CSS output file&#x27;));
+      }
+
+      // Fix garbled output.
+      if (!(contents instanceof Buffer)) {
+        contents = new Buffer(contents);
+      }
+
+      outputStream.push(new gutil.File({
+        base: opt.css,
+        path: pathToCss,
+        contents: contents
+      }));
+
+      cb();
+    });
+  };
+
+  var compile = function(cb) {
+    var _this = this;
+    var fileNames = files.map(function(f) {
+      return f.path;
+    });
+
+    compass(fileNames, opt, function(code, stdout, stderr, pathsToCss, options) {
+      if (code === 127) {
+        return cb(new gutil.PluginError(PLUGIN_NAME, &#x27;You need to have Ruby and Compass installed &#x27; +
+          &#x27;and in your system PATH for this task to work.&#x27;));
+      }
+
+      // support error callback
+      if (code !== 0) {
+        return cb(new gutil.PluginError(PLUGIN_NAME, stdout || &#x27;Compass failed&#x27;));
+      }
+
+      cb = callCounter(files.length, cb);
+      pathsToCss.forEach(function(f) {
+        readFileAndPush(f, _this, cb);
+      });
+    });
+  };
+
+  return through.obj(collectNames, compile);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-compass.toString" id="apidoc.element.gulp-compass.toString">
+        function <span class="apidocSignatureSpan">gulp-compass.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return toString;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 </div>
 

@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/appleboy/gulp-compass"
-
-    >gulp-compass (v2.1.0)</a>
+    <a href="https://github.com/appleboy/gulp-compass">gulp-compass (v2.1.0)</a>
 </h1>
 <h4>Compile Compass files</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-compass">module gulp-compass</a><ol>
 
@@ -103,10 +96,10 @@
     }
 
     if (file.isStream()) {
-      return cb(new gutil.PluginError(PLUGIN_NAME, &#x27;Streaming not supported&#x27;));
+      return cb(new gutil.PluginError(PLUGIN_NAME, 'Streaming not supported'));
     }
 
-    if (path.basename(file.path)[0] !== &#x27;_&#x27;) {
+    if (path.basename(file.path)[0] !== '_') {
       files.push(file);
     }
 
@@ -117,7 +110,7 @@
     // Read each generated file so it can continue being streamed.
     fs.readFile(pathToCss, function(err, contents) {
       if (err) {
-        return cb(new gutil.PluginError(PLUGIN_NAME, &#x27;Failure reading in the CSS output file&#x27;));
+        return cb(new gutil.PluginError(PLUGIN_NAME, 'Failure reading in the CSS output file'));
       }
 
       // Fix garbled output.
@@ -143,13 +136,13 @@
 
     compass(fileNames, opt, function(code, stdout, stderr, pathsToCss, options) {
       if (code === 127) {
-        return cb(new gutil.PluginError(PLUGIN_NAME, &#x27;You need to have Ruby and Compass installed &#x27; +
-          &#x27;and in your system PATH for this task to work.&#x27;));
+        return cb(new gutil.PluginError(PLUGIN_NAME, 'You need to have Ruby and Compass installed ' +
+          'and in your system PATH for this task to work.'));
       }
 
       // support error callback
       if (code !== 0) {
-        return cb(new gutil.PluginError(PLUGIN_NAME, stdout || &#x27;Compass failed&#x27;));
+        return cb(new gutil.PluginError(PLUGIN_NAME, stdout || 'Compass failed'));
       }
 
       cb = callCounter(files.length, cb);
@@ -188,3 +181,4 @@
     ]
 </div>
 </div>
+</body></html>
