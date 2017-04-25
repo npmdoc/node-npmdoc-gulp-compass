@@ -1,7 +1,7 @@
 {
     "author": "kai zhu <kaizhu256@gmail.com>",
     "buildNpmdoc": "gulp-compass",
-    "description": "api documentation for [gulp-compass (v2.1.0)](https://github.com/appleboy/gulp-compass) [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-compass.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-compass) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-compass.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-compass)",
+    "description": "#### basic api documentation for  [gulp-compass (v2.1.0)](https://github.com/appleboy/gulp-compass)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-compass.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-compass) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-compass.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-compass)",
     "devDependencies": {
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
         "gulp-compass": "*",

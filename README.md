@@ -1,4 +1,7 @@
-# api documentation for  [gulp-compass (v2.1.0)](https://github.com/appleboy/gulp-compass)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-compass.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-compass) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-compass.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-compass)
+# npmdoc-gulp-compass
+
+#### basic api documentation for  [gulp-compass (v2.1.0)](https://github.com/appleboy/gulp-compass)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-compass.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-compass) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-compass.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-compass)
+
 #### Compile Compass files
 
 [![NPM](https://nodei.co/npm/gulp-compass.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/gulp-compass)
@@ -82,7 +85,8 @@
     "scripts": {
         "test": "gulp"
     },
-    "version": "2.1.0"
+    "version": "2.1.0",
+    "bin": {}
 }
 ```
 
